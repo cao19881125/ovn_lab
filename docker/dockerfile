@@ -1,0 +1,9 @@
+FROM centos:7
+
+COPY ./package/*.rpm /root/package/
+COPY ./script/*.sh /usr/local/bin/
+
+RUN yum install -y /root/package/*.rpm
+
+RUN chmod +x /usr/local/bin/*.sh
+
