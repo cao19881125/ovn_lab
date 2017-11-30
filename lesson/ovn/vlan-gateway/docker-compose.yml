@@ -1,0 +1,47 @@
+version: '2'
+services:
+  outer-computer:
+    image: ovn_lab:v1 
+    container_name: outer-computer
+    hostname: outer-computer
+    command: bash -c 'while true;do sleep 10;done' 
+    privileged: true
+    environment:
+      TERM: linux
+    networks:
+      net122:
+        ipv4_address: 192.168.122.251
+      net200:
+        ipv4_address: 192.168.200.1
+    volumes:
+      - .:/root/ovn_lab
+  inner-computer:
+    image: ovn_lab:v1
+    container_name: inner-computer
+    hostname: inner-computer
+    command: bash -c 'while true;do sleep 10;done'
+    privileged: true
+    environment:
+      TERM: linux
+    networks:
+      net200:
+        ipv4_address: 192.168.200.101
+    volumes:
+      - .:/root/ovn_lab
+  gateway:
+    image: ovn_lab:v1
+    container_name: gateway
+    hostname: gateway
+    command: bash -c 'while true;do sleep 10;done'
+    environment:
+      TERM: linux
+    networks:
+      net200:
+         ipv4_address: 192.168.200.111
+
+networks:
+  net122:
+    external: true
+  net200:
+    external: true
+    
