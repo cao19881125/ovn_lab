@@ -1,0 +1,43 @@
+version: '2'
+services:
+  host-ovn:
+    image: ovn_lab:v1 
+    container_name: host-ovn
+    hostname: host-ovn
+    command: bash -c 'while true;do sleep 10;done' 
+    privileged: true
+    environment:
+      TERM: linux
+      MY_IP: 10.10.0.10
+    ports:
+      - "16640:6640"
+      - "16641:6641"
+      - "16642:6642" 
+    networks:
+      ovnnet:
+         ipv4_address: 10.10.0.10 
+    volumes:
+      - .:/root/ovn_lab
+  host-vtep:
+    image: ovn_lab:v1
+    container_name: host-vtep
+    hostname: host-vtep
+    command: bash -c 'while true;do sleep 10;done'
+    privileged: true
+    environment:
+      TERM: linux
+      OVN_SERVER: 10.10.0.10
+      MY_IP: 10.10.0.20
+    ports:
+      - "26640:6640"
+    networks:
+      ovnnet:
+        ipv4_address: 10.10.0.20
+    volumes:
+      - .:/root/ovn_lab
+     
+
+networks:
+  ovnnet:
+    external: true
+    
