@@ -1,0 +1,55 @@
+version: '2'
+services:
+  onos:
+    image: onosproject/onos
+    container_name: onos
+    hostname: onos
+    ports:
+      - "8181:8181"
+      - "6653:6653"
+    environment:
+      ONOS_APPS: "drivers,gui2,openflow,fwd"
+    networks:
+      onos_network:
+        ipv4_address: 10.10.0.100
+  ovs-host1:
+    image: ovn_lab:v1 
+    container_name: ovs-host1 
+    hostname: ovs-host1 
+    command: bash -c 'while true;do sleep 10;done' 
+    privileged: true
+    environment:
+      TERM: linux
+      ONOS_IP: 10.10.0.100
+      MY_IP: 10.10.0.10
+      VXLAN_REMOTE: 10.10.0.20
+    ports:
+      - "16640:6640"
+      - "16641:6641"
+      - "16642:6642" 
+    networks:
+      onos_network:
+        ipv4_address: 10.10.0.10 
+    volumes:
+      - .:/root/ovn_lab
+  ovs-host2:
+    image: ovn_lab:v1
+    container_name: ovs-host2
+    hostname: ovs-host2
+    command: bash -c 'while true;do sleep 10;done'
+    privileged: true
+    environment:
+      TERM: linux
+      ONOS_IP: 10.10.0.100
+      VXLAN_REMOTE: 10.10.0.10
+      MY_IP: 10.10.0.20
+    networks:
+      onos_network:
+        ipv4_address: 10.10.0.20
+    volumes:
+      - .:/root/ovn_lab
+     
+
+networks:
+  onos_network:
+    external: true    
