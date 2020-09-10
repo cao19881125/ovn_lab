@@ -66,3 +66,4 @@ ovn-nbctl lsp-add inside inside-vtep-gateway
 ovn-nbctl lsp-set-addresses inside-vtep-gateway "02:ac:10:ff:01:03 10.0.0.3"
 ovn-nbctl lsp-set-type inside-vtep-gateway vtep
 ovn-nbctl lsp-set-options inside-vtep-gateway vtep-physical-switch=br0 vtep-logical-switch=ls0
+ovn-nbctl lsp-set-dhcpv4-options inside-vtep-gateway $dhcptemp

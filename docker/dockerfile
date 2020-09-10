@@ -3,8 +3,7 @@ FROM centos:7
 COPY ./package/*.rpm /root/package/
 COPY ./script/*.sh /usr/local/bin/
 
-RUN yum install -y epel-release && yum install -y /root/package/openvswitch-2.7.90-1.el7.centos.x86_64.rpm  /root/package/openvswitch-ovn-central-2.7.90-1.el7.centos.x86_64.rpm  /root/package/openvswitch-ovn-common-2.7.90-1.el7.centos.x86_64.rpm  /root/package/openvswitch-ovn-host-2.7.90-1.el7.centos.x86_64.rpm /root/package/openvswitch-ovn-vtep-2.7.90-1.el7.centos.x86_64.rpm dhclient python-pip && pip install six ovs && yum clean all 
-
+RUN yum install -y epel-release && yum install -y /root/package/openvswitch-2.9.0-1.el7.centos.x86_64.rpm  /root/package/openvswitch-ovn-central-2.9.0-1.el7.centos.x86_64.rpm  /root/package/openvswitch-ovn-common-2.9.0-1.el7.centos.x86_64.rpm  /root/package/openvswitch-ovn-host-2.9.0-1.el7.centos.x86_64.rpm /root/package/openvswitch-ovn-vtep-2.9.0-1.el7.centos.x86_64.rpm dhclient python-pip && pip install six ovs && yum install -y tcpdump which nc && yum clean all
 
 RUN chmod +x /usr/local/bin/*.sh 
 
