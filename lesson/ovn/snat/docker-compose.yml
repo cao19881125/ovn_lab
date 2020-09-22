@@ -1,7 +1,7 @@
 version: '2'
 services:
   ovn-controller:
-    image: ovn_lab:v1 
+    image: ovn_lab:v2 
     container_name: ovn-controller
     hostname: ovn-controller
     command: bash -c 'while true;do sleep 10;done' 
@@ -21,7 +21,7 @@ services:
     volumes:
       - .:/root/ovn_lab
   ovn-computer:
-    image: ovn_lab:v1
+    image: ovn_lab:v2
     container_name: ovn-computer
     hostname: ovn-computer
     command: bash -c 'while true;do sleep 10;done'

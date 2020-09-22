@@ -1,3 +1,3 @@
 #!/bin/bash
 
-/usr/share/openvswitch/scripts/ovn-ctl stop_northd
+/usr/share/ovn/scripts/ovn-ctl stop_northd
