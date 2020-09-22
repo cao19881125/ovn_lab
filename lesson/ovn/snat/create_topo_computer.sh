@@ -16,7 +16,7 @@ ovs-vsctl set open . external-ids:ovn-remote=tcp:$OVN_SERVER:6642
 ovs-vsctl set open . external-ids:ovn-encap-type=geneve
 ovs-vsctl set open . external-ids:ovn-encap-ip=$MY_IP
 
-stop_ovn_controller.sh
-start_ovn_controller.sh
+/usr/share/ovn/scripts/ovn-ctl stop_controller
+/usr/share/ovn/scripts/ovn-ctl start_controller
 
 add_vm2

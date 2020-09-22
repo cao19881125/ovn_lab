@@ -1,0 +1,89 @@
+version: '2'
+services:
+  host-ctl:
+    image: ovn_lab:v2
+    container_name: ctl
+    hostname: ctl
+    command: bash -c 'while true; do sleep 10;done'
+    privileged: true
+    environment: 
+      TERM: linux
+      MY_IP: 192.168.10.181
+    ports:
+      - "16640:6640"
+      - "16641:6641"
+      - "16642:6642"
+    networks:
+      ovnnet:
+        ipv4_address: 192.168.10.181
+    volumes:
+      - .:/root/ovn_lab
+  host-gw1:
+    image: ovn_lab:v2
+    container_name: gw1
+    hostname: gw1
+    command: bash -c 'while true; do sleep 10; done'
+    privileged: true
+    environment: 
+      TERM: linux
+      MY_IP: 192.168.10.182
+    ports:
+      - "26640:6640"
+    networks:
+      ovnnet:
+        ipv4_address: 192.168.10.182
+    volumes:
+      - .:/root/ovn_lab
+  host-gw2:
+    image: ovn_lab:v2
+    container_name: gw2
+    hostname: gw2
+    command: bash -c 'while true; do sleep 10; done'
+    privileged: true
+    environment: 
+      TERM: linux
+      MY_IP: 192.168.10.183
+    ports:
+      - "36640:6640"
+    networks:
+      ovnnet:
+        ipv4_address: 192.168.10.183
+    volumes:
+      - .:/root/ovn_lab
+  host-hv1:
+    image: ovn_lab:v2
+    container_name: hv1
+    hostname: hv1
+    command: bash -c 'while true; do sleep 10; done'
+    privileged: true
+    environment: 
+      TERM: linux
+      MY_IP: 192.168.10.184
+    ports:
+      - "46640:6640"
+    networks:
+      ovnnet:
+        ipv4_address: 192.168.10.184
+    volumes:
+      - .:/root/ovn_lab
+  host-hv2:
+    image: ovn_lab:v2
+    container_name: hv2
+    hostname: hv2
+    command: bash -c 'while true; do sleep 10; done'
+    privileged: true
+    environment: 
+      TERM: linux
+      MY_IP: 192.168.10.185
+    ports:
+      - "56640:6640"
+    networks:
+      ovnnet:
+        ipv4_address: 192.168.10.185
+    volumes:
+      - .:/root/ovn_lab
+    
+
+networks:
+  ovnnet:
+    external: true
