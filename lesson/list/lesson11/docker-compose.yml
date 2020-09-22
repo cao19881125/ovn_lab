@@ -19,7 +19,7 @@ services:
       ovnnet_outer:
         ipv4_address: 10.20.0.10 
     volumes:
-      - .:/root/ovn_lab
+      - .:/root
   ovn-computer1:
     image: ovn_lab:v2
     container_name: ovn-computer1
@@ -36,7 +36,7 @@ services:
       ovnnet_outer:
         ipv4_address: 10.20.0.20 
     volumes:
-      - .:/root/ovn_lab
+      - .:/root
   ovn-computer2:
     image: ovn_lab:v2
     container_name: ovn-computer2
@@ -53,7 +53,24 @@ services:
       ovnnet_outer:
         ipv4_address: 10.20.0.30 
     volumes:
-      - .:/root/ovn_lab     
+      - .:/root  
+  ovn-gw1:
+    image: ovn_lab:v2
+    container_name: ovn-gw1
+    hostname: ovn-gw1
+    command: bash -c 'while true;do sleep 10;done'
+    privileged: true
+    environment: 
+      TERM: linux
+      OVN_SERVER: 10.10.0.10
+      MY_IP: 10.10.0.40
+    networks:
+      ovnnet_local:
+        ipv4_address: 10.10.0.40
+      ovnnet_outer:
+        ipv4_address: 10.20.0.40
+    volumes:
+      - .:/root
 
 networks:
   ovnnet_local:
