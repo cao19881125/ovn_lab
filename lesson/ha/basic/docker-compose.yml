@@ -1,0 +1,91 @@
+version: '2'
+services:
+  ovn-ctrl:
+    image: ovn_lab:v2
+    container_name: ovn-ctrl
+    hostname: ovn-ctrl
+    command: bash -c 'while true; do sleep 10;done'
+    privileged: true
+    environment: 
+      TERM: linux
+      MY_IP: 10.10.0.10
+    ports:
+      - "16640:6640"
+      - "16641:6641"
+      - "16642:6642"
+    networks:
+      ovnnet_local:
+        ipv4_address: 10.10.0.10
+    volumes:
+      - .:/root
+  ovn-gw1:
+    image: ovn_lab:v2
+    container_name: ovn-gw1
+    hostname: ovn-gw1
+    command: bash -c 'while true; do sleep 10; done'
+    privileged: true
+    environment: 
+      TERM: linux
+      OVN_SERVER: 10.10.0.10
+      MY_IP: 10.10.0.20
+    networks:
+      ovnnet_local:
+        ipv4_address: 10.10.0.20
+      ovnnet_outer:
+        ipv4_address: 10.20.0.20
+    volumes:
+      - .:/root
+  ovn-gw2:
+    image: ovn_lab:v2
+    container_name: ovn-gw2
+    hostname: ovn-gw2
+    command: bash -c 'while true; do sleep 10; done'
+    privileged: true
+    environment: 
+      TERM: linux
+      OVN_SERVER: 10.10.0.10
+      MY_IP: 10.10.0.30
+    networks:
+      ovnnet_local:
+        ipv4_address: 10.10.0.30
+      ovnnet_outer:
+        ipv4_address: 10.20.0.30
+    volumes:
+      - .:/root
+  ovn-hv1:
+    image: ovn_lab:v2
+    container_name: ovn-hv1
+    hostname: ovn-hv1
+    command: bash -c 'while true; do sleep 10; done'
+    privileged: true
+    environment: 
+      TERM: linux
+      OVN_SERVER: 10.10.0.10
+      MY_IP: 10.10.0.40
+    networks:
+      ovnnet_local:
+        ipv4_address: 10.10.0.40
+    volumes:
+      - .:/root
+  ovn-hv2:
+    image: ovn_lab:v2
+    container_name: ovn-hv2
+    hostname: ovn-hv2
+    command: bash -c 'while true; do sleep 10; done'
+    privileged: true
+    environment: 
+      TERM: linux
+      OVN_SERVER: 10.10.0.10
+      MY_IP: 10.10.0.50
+    networks:
+      ovnnet_local:
+        ipv4_address: 10.10.0.50
+    volumes:
+      - .:/root
+    
+
+networks:
+  ovnnet_local:
+    external: true
+  ovnnet_outer:
+    external: true
