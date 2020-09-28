@@ -14,8 +14,10 @@ services:
       - "16641:6641"
       - "16642:6642" 
     networks:
-      ovnnet:
-         ipv4_address: 10.10.0.10 
+      ovnnet_local:
+        ipv4_address: 10.10.0.10 
+      ovnnet_outer:
+        ipv4_address: 10.20.0.10 
     volumes:
       - .:/root/ovn_lab
   ovn-computer:
@@ -29,13 +31,17 @@ services:
       OVN_SERVER: 10.10.0.10
       MY_IP: 10.10.0.20
     networks:
-      ovnnet:
+      ovnnet_local:
         ipv4_address: 10.10.0.20
+      ovnnet_outer:
+        ipv4_address: 10.20.0.20 
     volumes:
       - .:/root/ovn_lab
      
 
 networks:
-  ovnnet:
+  ovnnet_local:
+    external: true
+  ovnnet_outer:
     external: true
     

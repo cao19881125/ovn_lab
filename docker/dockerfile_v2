@@ -4,6 +4,6 @@ COPY ./package/ovs-2.14/*.rpm /root/package/
 COPY ./package/ovn-20.06/*.rpm /root/package/
 COPY ./script/*.sh /usr/local/bin/
 
-RUN yum install -y /root/package/openvswitch-2.14.0-1.el8.x86_64.rpm  /root/package/ovn-20.06.90-1.el8.x86_64.rpm  /root/package/ovn-central-20.06.90-1.el8.x86_64.rpm  /root/package/ovn-host-20.06.90-1.el8.x86_64.rpm /root/package/ovn-vtep-20.06.90-1.el8.x86_64.rpm dhclient && yum install -y tcpdump which nc && yum clean all
+RUN yum install -y /root/package/openvswitch-2.14.0-1.el8.x86_64.rpm  /root/package/ovn-20.06.90-1.el8.x86_64.rpm  /root/package/ovn-central-20.06.90-1.el8.x86_64.rpm  /root/package/ovn-host-20.06.90-1.el8.x86_64.rpm /root/package/ovn-vtep-20.06.90-1.el8.x86_64.rpm dhclient && yum install -y tcpdump which nc iperf3&& yum clean all
 
 RUN chmod +x /usr/local/bin/*.sh 

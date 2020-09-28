@@ -5,9 +5,18 @@ ip netns add vm2
 ovs-vsctl add-port br-int vm2 -- set interface vm2 type=internal
 ip link set vm2 address 02:ac:10:ff:01:31
 ip link set vm2 netns vm2
-ovs-vsctl set Interface vm2 external_ids:iface-id=ls2-vm2
+ovs-vsctl set Interface vm2 external_ids:iface-id=ls1-vm2
 pkill dhclient
 ip netns exec vm2 dhclient vm2
+}
+function add_vm4(){
+ip netns add vm4
+ovs-vsctl add-port br-int vm4 -- set interface vm4 type=internal
+ip link set vm4 address 02:ac:10:ff:01:33
+ip link set vm4 netns vm4
+ovs-vsctl set Interface vm4 external_ids:iface-id=ls2-vm4
+pkill dhclient
+ip netns exec vm4 dhclient vm4
 }
 
 
@@ -20,3 +29,4 @@ stop_ovn_controller.sh
 start_ovn_controller.sh
 
 add_vm2
+add_vm4
