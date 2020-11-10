@@ -18,8 +18,8 @@ ovs-vsctl set open . external-ids:ovn-remote=tcp:0.0.0.0:6642
 ovs-vsctl set open . external-ids:ovn-encap-type=geneve
 ovs-vsctl set open . external-ids:ovn-encap-ip=$MY_IP
 
-stop_ovn_controller.sh
-start_ovn_controller.sh
+/usr/share/ovn/scripts/ovn-ctl stop_controller
+/usr/share/ovn/scripts/ovn-ctl start_controller
 
 LOCAL_CHASSIS=`cat /etc/openvswitch/system-id.conf`
 ovn-nbctl create Logical_Router name=router options:chassis=$LOCAL_CHASSIS
@@ -48,11 +48,16 @@ ovn-nbctl lsp-add lswitch2 ls2-vm2
 ovn-nbctl lsp-set-addresses ls2-vm2 "02:ac:10:ff:01:31 10.1.0.20"
 ovn-nbctl lsp-set-port-security ls2-vm2 "02:ac:10:ff:01:31 10.1.0.20"
 
+ovn-nbctl lsp-add lswitch2 ls2-vm3
+ovn-nbctl lsp-set-addresses ls2-vm3 "02:ac:10:ff:01:32 10.1.0.21"
+ovn-nbctl lsp-set-port-security ls2-vm3 "02:ac:10:ff:01:32 10.1.0.21"
+
 dhcp_sw1=`ovn-nbctl create DHCP_Options cidr=10.0.0.0/24 options="\"server_id\"=\"10.0.0.1\" \"server_mac\"=\"52:54:00:c1:68:50\" \"lease_time\"=\"3600\" \"router\"=\"10.0.0.1\""`
 dhcp_sw2=`ovn-nbctl create DHCP_Options cidr=10.1.0.0/24 options="\"server_id\"=\"10.1.0.1\" \"server_mac\"=\"52:54:00:c1:68:60\" \"lease_time\"=\"3600\" \"router\"=\"10.1.0.1\""`
 
 ovn-nbctl lsp-set-dhcpv4-options ls1-vm1 $dhcp_sw1
 ovn-nbctl lsp-set-dhcpv4-options ls2-vm2 $dhcp_sw2
+ovn-nbctl lsp-set-dhcpv4-options ls2-vm3 $dhcp_sw2
 
 add_vm1
 
