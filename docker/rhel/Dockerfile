@@ -9,10 +9,12 @@ RUN /build.sh $OVN_BRANCH $GITHUB_SRC
 COPY script/start_con.sh /start_con.sh
 COPY script/generate_dhclient_script_for_fullstack.sh /tmp/generate_dhclient_script_for_fullstack.sh
 RUN chmod +x start_con.sh /tmp/generate_dhclient_script_for_fullstack.sh
-RUN /tmp/generate_dhclient_script_for_fullstack.sh ""
-RUN yum autoremove -y
-RUN yum clean all
-RUN rm -rf /var/cache/yum
+RUN yum install -y vim-minimal \
+        net-tools iputils uuid iproute \
+        which dhclient python3 \
+        libreswan conntrack-tools \
+        nmap iperf socat && yum -y autoremove && yum clean all \
+        && rm -rf /var/cache/yum && /tmp/generate_dhclient_script_for_fullstack.sh ""
 
 VOLUME ["/var/log/openvswitch", \
 "/var/lib/openvswitch", "/var/run/openvswitch", "/etc/openvswitch", \

@@ -16,22 +16,21 @@ OVN_BRANCH=$1
 GITHUB_SRC=$2
 
 # Install deps
-build_deps="rpm-build yum-utils yum-builddep automake autoconf openssl-devel \
-epel-release python3 gdb libtool git bzip2 perl-core zlib-devel openssl git \
-libtool"
+build_deps="rpm-build yum-utils automake autoconf openssl-devel \
+epel-release libtool git openssl python3"
 
-yum update -y
-yum install @'Development Tools'  ${build_deps} -y
+#yum update -y
+yum -y install ${build_deps}
 
 ./install_ovn.sh $OVN_BRANCH $GITHUB_SRC
 
 # remove unused packages to make the container light weight.
-for i in $(package-cleanup --leaves --all);
-    do yum remove -y $i; yum autoremove -y;
-done
-yum remove ${build_deps} -y
+# for i in $(package-cleanup --leaves --all);
+# do
+#     yum remove -y $i; yum autoremove -y;
+# done
+yum -y remove ${build_deps}
+# yum -y install yum-plugin-ovl
+yum -y autoremove
 rm -rf /build
 
-# Install basic utils
-basic_utils="vim-minimal.x86_64 net-tools.x86_64 iputils.x86_64 dhclient.x86_64 uuid.x86_64 iproute.x86_64 which.x86_64"
-yum install -y ${basic_utils}
