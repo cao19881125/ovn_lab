@@ -26,7 +26,7 @@ mkdir _gcc;
 cd _gcc
 ../configure --localstatedir="/var" --sysconfdir="/etc" --prefix="/usr" \
 --enable-ssl
-cd ..; make -C _gcc install; cd ..
+cd ..; make -j$(($(nproc) + 1)) V=0; make -C _gcc install; cd ..
 
 
 # get ovn source
@@ -37,7 +37,7 @@ cd ovn
 ./boot.sh
 ./configure --localstatedir="/var" --sysconfdir="/etc" --prefix="/usr" \
 --enable-ssl --with-ovs-source=/build/ovs/ --with-ovs-build=/build/ovs/_gcc
-make -j8; make install
+make -j$(($(nproc) + 1)) V=0; make install
 
 # Generate SSL certificates.
 cd /
