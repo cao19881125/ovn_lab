@@ -30,7 +30,7 @@ for i in $(package-cleanup --leaves --all);
     do yum remove -y $i; yum autoremove -y;
 done
 yum remove ${build_deps} -y
-cd ..; rm -rf ovs; rm -rf ovn
+rm -rf /build
 
 # Install basic utils
 basic_utils="vim-minimal.x86_64 net-tools.x86_64 iputils.x86_64 dhclient.x86_64 uuid.x86_64 iproute.x86_64 which.x86_64"
