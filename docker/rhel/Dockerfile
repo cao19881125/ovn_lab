@@ -10,6 +10,9 @@ COPY script/start_con.sh /start_con.sh
 COPY script/generate_dhclient_script_for_fullstack.sh /tmp/generate_dhclient_script_for_fullstack.sh
 RUN chmod +x start_con.sh /tmp/generate_dhclient_script_for_fullstack.sh
 RUN /tmp/generate_dhclient_script_for_fullstack.sh ""
+RUN yum autoremove -y
+RUN yum clean all
+RUN rm -rf /var/cache/yum
 
 VOLUME ["/var/log/openvswitch", \
 "/var/lib/openvswitch", "/var/run/openvswitch", "/etc/openvswitch", \
